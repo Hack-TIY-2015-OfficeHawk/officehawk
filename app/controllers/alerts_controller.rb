@@ -34,7 +34,7 @@ class AlertsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_beacon
-      @beacon = Beacon.where(uuid: params[:uuid]).where(major: params[:major]).where(minor: params[:minor])
+      @beacon = Beacon.find_by(organization_id: current_employee.organization_id, uuid: params[:uuid], major: params[:major], minor: params[:minor])
     end
 
 
