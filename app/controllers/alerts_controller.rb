@@ -15,7 +15,7 @@ class AlertsController < ApplicationController
       if @alert.save
         render "create.json.jbuilder", status: :created
       else
-        render json: { errors: @organization.errors.full_messages }, status: :unprocessable_entity
+        render json: { errors: @alert.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
