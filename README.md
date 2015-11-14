@@ -5,62 +5,64 @@ Welcome to the office hawk API docs!
 **Methods**
 
 * [Organization Methods](#org-methods)
-	* [Registration](#org-registration)
-	* [Editing](#org-edit)
-	* [Deleting](#org-delete)
-	* [Listing Registered Orgs](#org-index)
-	
+    * [Registration](#org-registration)
+    * [Editing](#org-edit)
+    * [Deleting](#org-delete)
+    * [Listing Registered Orgs](#org-index)
+
+    
 * [Employee Methods](#emp-methods)
-	* [New](#emp-new)
-	* [Login](#emp-login)
-	* [List Employees](#emp-list)
-	* [Update Employee](#emp-update)
+    * [Login](#emp-login)
+    * [Registration](#emp-registration)
+
 
 ##<a name="org-methods"></a>Organization Methods
 
-
 ###<a name="org-registration"></a>Registration
 
-Register a new organization
+This request triggers creating a new organiztation as well as creating a new user who will be tagged as an admin.
 
 **URL** /organizations
 
 **Method** POST
 
 **Request**
-	
+    
 
 | Parameter        | Type           | Description  |
 | ------------- |:-------------:|:----- |
-| name  | String | *(Required)*  unique organization name |
-| owner     | String      |  *(Required)*   Username of the org owner |
+| username  | String | ​*(Required)*​  unique username.  This will also become the owner of the org/team |
+| password    | String      |  ​*(Required)*​  Password for the user |
+| name | String | ​*(Required)*​ Unique name of team/organization |
 
 
 **Response**
 
 If successful, you will receive:
 
-	Status Code: 201 - Created
-	
+    Status Code: 201 - Created
+    
 ```json
-	{ "organization": 
-			{ "organization_id": 1,
-			  "name": "nameoforghere"
-			  "owner": "usernameofownerhere"
-			}
-	}
-			
+    { "organization": 
+            { "organization_id": 1,
+              "name": "nameoforghere"
+              "owner": "usernameofownerhere"
+              "auth_token: "The Auth Token for the Owner"
+            }
+    }
+            
 ```
+​*As long as you get the above, the owner user was also succeesfully created.*​
 
 If unsuccessful, you will receive:
 
-	Status Code: 422 - Unprocessable Entity
-	
+    Status Code: 422 - Unprocessable Entity
+    
 ```json
-	{"errors":[
-				"Organization has already been taken",
-				]
-	}
+    {"errors":[
+                "Organization has already been taken",
+                ]
+    }
 ```
 
 ###<a name="org-edit"></a>Editing
@@ -74,12 +76,12 @@ NOTE: for owner parameter, the username must be EXACTLY THE SAME AS THE USERNAME
 **Method** PUT
 
 **Request**
-	
+    
 
 | Parameter        | Type           | Description  |
 | ------------- |:-------------:|:----- |
-| name  | String | *(Required)*  unique organization name |
-| owner     | String      |  *(Required)*   Username of the org owner |
+| name  | String | ​*(Required)*​  unique organization name |
+| owner     | String      |  ​*(Required)*​   Username of the org owner |
 
 
 **Response**
@@ -90,13 +92,13 @@ If successful, you will receive:
 
 If unsuccessful, you will receive:
 
-	Status Code: 422 - Unprocessable Entity
-	
+    Status Code: 422 - Unprocessable Entity
+    
 ```json
-	{"errors":[
-				"What you messed up will be in here",
-				]
-	}
+    {"errors":[
+                "What you messed up will be in here",
+                ]
+    }
 ```
 
 ###<a name="org-delete"></a>Deleting an Org
@@ -108,11 +110,11 @@ Deleting an org (v2: and all associated entities)
 **Method** DELETE
 
 **Request**
-	
+    
 
 | Parameter        | Type           | Description  |
 | ------------- |:-------------:|:----- |
-| organization_id  | Integer | *(Required)*  The ID of the org you want to destroy |
+| organization_id  | Integer | ​*(Required)*​  The ID of the org you want to destroy |
 
 **Response**
 
@@ -133,29 +135,30 @@ Get a list of all registered organizations
 **Method** GET
 
 **Request**
-	
-*There are no parameters required for this request.  Orgs are searchable by ID, Name and Owner (which will be a username from the Employees database)*
+    
+​*There are no parameters required for this request.  Orgs are searchable by ID, Name and Owner (which will be a username from the Employees database)*​
 
 
 **Response**
 
 If successful, you will receive a list of all registered organizations:
 
-	Status Code: 200 - OK
-	
+    Status Code: 200 - OK
+    
 ```json
-	{ "organization": 
-			{ "organization_id": 1,
-			  "name": "nameoforghere"
-			  "owner": "usernameofownerhere"
-			}
-	}
-			
+    { "organization": 
+            { "organization_id": 1,
+              "name": "nameoforghere"
+              "owner": "usernameofownerhere"
+            }
+    }
+            
 ```
 
 If unsuccessful, you will receive:
 
 `Probably nothing.  Nobody has ever failed this.`
+
 
 ##<a name="emp-methods"></a>Employee Methods
 
