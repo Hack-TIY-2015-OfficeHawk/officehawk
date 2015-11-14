@@ -7,5 +7,5 @@ class Beacon < ActiveRecord::Base
   # validates_uniqueness_of [:major, :minor], scope: :organization
   # validates_uniqueness_of :name, scope: :organization_id
 
-  validates_presence_of :organization_id, :manjor, :minor, :uuid
+  validates_presence_of :organization_id, :major, :minor, :uuid
 end
