@@ -18,6 +18,11 @@ Welcome to the office hawk API docs!
     * [Update Employee](#emp-update)
     * [Delete Employee](#emp-delete)
 
+* [Alert Methods](#alert-methods)
+	* [New Alert](#alert-new)
+	* [Delete Alert](#alert-delete)
+	* [Index of Alerts](#alert-index)
+
 
 ##<a name="org-methods"></a>Organization Methods
 
@@ -371,4 +376,52 @@ If unsuccessful, you will receive:
 {
   "errors": "You don't have permission to delete that employee"
 }
+```
+##<a name="alert-methods"></a>Alert Methods
+
+###<a name="alert-new"></a>New Alert
+
+This request triggers creating a new organiztation as well as creating a new user who will be tagged as an admin.
+
+**URL** /organizations
+
+**Method** POST
+
+**Request**
+    
+
+| Parameter        | Type           | Description  |
+| ------------- |:-------------:|:----- |
+| username  | String | ​*(Required)*​  unique username.  This will also become the owner of the org/team |
+| password    | String      |  ​*(Required)*​  Password for the user |
+| name | String | ​*(Required)*​ Unique name of team/organization |
+
+
+**Response**
+
+If successful, you will receive:
+
+    Status Code: 201 - Created
+    
+```json
+    { "organization": 
+            { "organization_id": 1,
+              "name": "nameoforghere"
+              "owner": "usernameofownerhere"
+              "auth_token: "The Auth Token for the Owner"
+            }
+    }
+            
+```
+​*As long as you get the above, the owner user was also succeesfully created.*​
+
+If unsuccessful, you will receive:
+
+    Status Code: 422 - Unprocessable Entity
+    
+```json
+    {"errors":[
+                "Organization has already been taken",
+                ]
+    }
 ```
