@@ -13,7 +13,10 @@ Welcome to the office hawk API docs!
     
 * [Employee Methods](#emp-methods)
     * [Login](#emp-login)
-    * [Registration](#emp-registration)
+    * [Registration](#emp-new)
+    * [List Employees](#emp-list)
+    * [Update Employee](#emp-update)
+    * [Delete Employee](#emp-delete)
 
 
 ##<a name="org-methods"></a>Organization Methods
@@ -334,7 +337,7 @@ If unsuccessful, you will receive:
 }
 ```
 
-###<a name="emp-update"></a>Delete Employee
+###<a name="emp-delete"></a>Delete Employee
 
 Delete an employee from a team/org, must be logged in as an ADMIN user by providing their auth_token as a header
 
