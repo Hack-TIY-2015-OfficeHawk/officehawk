@@ -17,7 +17,7 @@ Welcome to the office hawk API docs!
 
 ###<a name="org-registration"></a>Registration
 
-Register a new organization
+Register a new organization.  This is handled from the Welcome Screen: a new employee
 
 **URL** /<PUT ROUTE HERE>
 

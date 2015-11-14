@@ -1,4 +1,5 @@
 json.organization do
+  json.id @organization.id
   json.name @organization.name
   json.owner @organization.owner
 

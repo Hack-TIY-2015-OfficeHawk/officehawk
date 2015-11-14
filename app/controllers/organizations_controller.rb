@@ -38,6 +38,7 @@ class OrganizationsController < ApplicationController
   # DELETE /organizations/1.json
   def destroy
     @organization.destroy
+    render json: { success: "Organization deleted successfully" }, status: :ok
   end
 
 
