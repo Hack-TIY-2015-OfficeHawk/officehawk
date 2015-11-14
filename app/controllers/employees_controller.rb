@@ -53,6 +53,7 @@ class EmployeesController < ApplicationController
     else
       render json: { errors: "You don't have permission to delete that employee" }, status: :unauthorized
   end
+end
 
   private
     # Use callbacks to share common setup or constraints between actions.
