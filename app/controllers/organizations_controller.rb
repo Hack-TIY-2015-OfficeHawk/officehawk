@@ -16,29 +16,21 @@ class OrganizationsController < ApplicationController
   # POST /organizations.json
   def create
     @organization = Organization.new(organization_params)
-
-    respond_to do |format|
-      if @organization.save
-        format.html { redirect_to @organization, notice: 'Organization was successfully created.' }
-        format.json { render :show, status: :created, location: @organization }
-      else
-        format.html { render :new }
-        format.json { render json: @organization.errors, status: :unprocessable_entity }
-      end
+    if @organization.save
+      render "create.json.jbuilder", status: :created
+    else
+      render json: { errors: @organization.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /organizations/1
   # PATCH/PUT /organizations/1.json
   def update
-    respond_to do |format|
-      if @organization.update(organization_params)
-        format.html { redirect_to @organization, notice: 'Organization was successfully updated.' }
-        format.json { render :show, status: :ok, location: @organization }
-      else
-        format.html { render :edit }
-        format.json { render json: @organization.errors, status: :unprocessable_entity }
-      end
+    @organization.update(organization_params)
+    if @organization.save
+      render "update.json.jbuilder", status: :ok
+    else
+      render json: { errors: @orgnanization.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -46,9 +38,6 @@ class OrganizationsController < ApplicationController
   # DELETE /organizations/1.json
   def destroy
     @organization.destroy
-    respond_to do |format|
-      format.html { redirect_to organizations_url, notice: 'Organization was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
@@ -60,6 +49,6 @@ class OrganizationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def organization_params
-      params.require(:organization).permit(:name, :member_count, :owner)
+      params.require(:organization, :name).permit(:member_count, :owner)
     end
 end
