@@ -9,9 +9,9 @@ Welcome to the office hawk API docs!
 
 	
 * [Employee Methods](#emp-methods)
+	* [New](#emp-new)
 	* [Login](#emp-login)
-	* [Registration](#emp-registration)
-
+	* [List Employees](#emp-list)
 
 ##<a name="org-methods"></a>Organization Methods
 
@@ -63,24 +63,20 @@ If unsuccessful, you will receive:
 
 ##<a name="emp-methods"></a>Employee Methods
 
-###<a name="emp-registration"></a>Registration
+###<a name="emp-new"></a>New
 
-Register a new employee
+Sign up a new employee
 
-**URL** /<PUT ROUTE HERE>
+**URL** /organizations/:organization_id/employees/new
 
-**Method** < GET POST PATCH OR DELETE>
+**Method** POST
 
 **Request**
 	
-
 | Parameter        | Type           | Description  |
 | ------------- |:-------------:|:----- |
-| username  | String | *(Required)*  unique username |
-| fullname      | String      |  *(Required)*   User's first and last name |
-| email | String      | *(Required)*   User's email (must follow format text@text.text) |
-| password | String | *(Requred)* User's password
-
+| username  | String | *(Required)*  unique username per organization (within an organizations two users cannot have the same username) |
+| password | String | *(Requred)* employee's password |
 
 **Response**
 
@@ -89,11 +85,11 @@ If successful, you will receive:
 	Status Code: 201 - Created
 	
 ```json
-	{ "user": 
-			{ "user_id": 1,
-			  "access_key": "biglongaccesskeyhere"
-			}
-	}
+{
+  "success": "dan created successfully",
+  "username": "dan",
+  "auth_token": "f74ef72a9c26cc05ac181aab3083521f"
+}
 			
 ```
 
@@ -103,9 +99,126 @@ If unsuccessful, you will receive:
 	
 ```json
 	{"errors":[
-				"Email has already been taken",
-				"Username has already been taken"
+				"Username has already been taken",
 				]
 	}
 ```
 
+###<a name="emp-login"></a>Login
+
+Login an existing employee
+
+**URL** /organizations/:organization_id/employees/new
+
+**Method** POST
+
+**Request**
+	
+| Parameter        | Type           | Description  |
+| ------------- |:-------------:|:----- |
+| username  | String | *(Required)*  existing employee's username for the organiation id provided |
+| password | String | *(Requred)* employee's password |
+
+**Response**
+
+If successful, you will receive:
+
+	Status Code: 201 - Created
+	
+```json
+{
+  "success": "dan logged in successfully",
+  "username": "dan",
+  "auth_token": "f74ef72a9c26cc05ac181aab3083521f"
+}
+			
+```
+
+If unsuccessful, you will receive:
+
+	Status Code: 422 - Unprocessable Entity
+	
+```json
+{
+  "errors": "username or password incorrect"
+}
+```
+
+###<a name="emp-list"></a>List Employees for an Org
+
+List all employees for an organization, must be logged in as an ADMIN user
+
+**URL** /organizations/:organization_id/employees
+
+**Method** POST
+
+**Request**
+	
+| Parameter        | Type           | Description  |
+| ------------- |:-------------:|:----- |
+| username  | String | *(Required)*  existing employee's username for the organiation id provided |
+| password | String | *(Requred)* employee's password |
+
+**Response**
+
+If successful, you will receive:
+
+	Status Code: 201 - Created
+	
+```json
+{
+  "success": "dan logged in successfully",
+  "username": "dan",
+  "auth_token": "f74ef72a9c26cc05ac181aab3083521f"
+}
+			
+```
+
+If unsuccessful, you will receive:
+
+	Status Code: 422 - Unprocessable Entity
+	
+```json
+{
+  "errors": "username or password incorrect"
+}
+```
+
+###<a name="emp-update"></a>Update Employee
+
+Update employee username, must be logged in as an ADMIN user
+
+**URL** /employees/:id
+
+**Method** PUT
+
+**Request**
+	
+| Parameter        | Type           | Description  |
+| ------------- |:-------------:|:----- |
+| username  | String | *(Required)*  whatever you want to change the username to |
+
+**Response**
+
+If successful, you will receive:
+
+	Status Code: 201 - Created
+	
+```json
+{
+  "success": "dan logged in successfully",
+  "username": "dan",
+  "auth_token": "f74ef72a9c26cc05ac181aab3083521f"
+}
+			
+```
+
+If unsuccessful, you will receive:
+
+	Status Code: 422 - Unprocessable Entity
+	
+```json
+{
+  "errors": "username or password incorrect"
+}
+```

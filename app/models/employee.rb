@@ -18,7 +18,7 @@ class Employee < ActiveRecord::Base
 
   def self.generate_token
     token = SecureRandom.hex
-    while User.exists?(auth_token: token)
+    while Employee.exists?(auth_token: token)
       token = SecureRandom.hex
     end
     token
