@@ -12,16 +12,6 @@ class EmployeesController < ApplicationController
   def show
   end
 
-  # GET /employees/new
-  def new
-    #if first user, set admin = true
-    @employee = Employee.new
-  end
-
-  # GET /employees/1/edit
-  def edit
-  end
-
   # POST /employees
   # POST /employees.json
   def create
