@@ -1,6 +1,7 @@
 class AlertsController < ApplicationController
   before_action :set_alert, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_beacon, only: [:create, :destroy]
+  before_action :authenticate_employee!
   # GET /alerts
   # GET /alerts.json
   def index
@@ -11,7 +12,12 @@ class AlertsController < ApplicationController
   # POST /alerts
   # POST /alerts.json
   def create
-    @alert = Alert.new(alert_params)
+    # from mac - state, duration, uuid, major, minor
+    # we have - current_employee.id , @beacon.id
+    @alert = Alert.new(beacon_id: @beacon.id,
+                       duration: params[:duration],
+                       state: params[:state],
+                       employee_id: current_employee.id)
       if @alert.save
         render "create.json.jbuilder", status: :created
       else
@@ -27,12 +33,17 @@ class AlertsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_beacon
+      @beacon = Beacon.where(uuid: params[:uuid]).where(major: params[:major]).where(minor: params[:minor])
+    end
+
+
     def set_alert
       @alert = Alert.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def alert_params
-      params.require(:alert).permit(:beacon_id, :state, :duration, :employee_id)
-    end
+    #def alert_params
+      #params.require(:alert).permit(:beacon_id, :state, :duration, :employee_id)
+    #end
 end
