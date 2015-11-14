@@ -20,7 +20,7 @@ Welcome to the office hawk API docs!
 
 ###<a name="org-registration"></a>Registration
 
-Register a new organization
+This request triggers creating a new organiztation as well as creating a new user who will be tagged as an admin.
 
 **URL** /organizations
 
@@ -31,8 +31,9 @@ Register a new organization
 
 | Parameter        | Type           | Description  |
 | ------------- |:-------------:|:----- |
-| name  | String | *(Required)*  unique organization name |
-| owner     | String      |  *(Required)*   Username of the org owner |
+| username  | String | *(Required)*  unique username.  This will also become the owner of the org/team |
+| password    | String      |  *(Required)*  Password for the user |
+| name | String | *(Required)* Unique name of team/organization |
 
 
 **Response**
@@ -50,6 +51,7 @@ If successful, you will receive:
 	}
 			
 ```
+*As long as you get the above, the owner user was also succeesfully created.*
 
 If unsuccessful, you will receive:
 
