@@ -84,6 +84,10 @@ NOTE: for owner parameter, the username must be EXACTLY THE SAME AS THE USERNAME
 **Method** PUT
 
 **Request**
+
+*HEADERS*: 
+
+auth-token *(Required)*
     
 
 | Parameter        | Type           | Description  |
@@ -228,7 +232,7 @@ Login an existing employee
 	
 | Parameter        | Type           | Description  |
 | ------------- |:-------------:|:----- |
-| username  | String | *(Required)*  existing employee's username for the organiation id provided |
+| username | String | *(Required)*  existing employee's username for the organiation id provided |
 | password | String | *(Requred)* employee's password |
 
 **Response**
@@ -266,7 +270,7 @@ List all employees for an organization, must be logged in as an ADMIN user or pr
 
 **Headers**
 
-auth_token *(Required)*
+auth-token *(Required)*
 
 **Request**
 
@@ -312,7 +316,7 @@ Update employee username, must be logged in as an ADMIN user by providing their 
 
 **Headers**
 
-auth_token *(Required)*
+auth-token *(Required)*
 
 **Request**
 	
@@ -354,7 +358,7 @@ Delete an employee from a team/org, must be logged in as an ADMIN user by provid
 	
 **Headers**
 
-auth_token *(Required)*
+auth-token *(Required)*
 
 **Response**
 
@@ -381,20 +385,27 @@ If unsuccessful, you will receive:
 
 ###<a name="alert-new"></a>New Alert
 
-This request triggers creating a new organiztation as well as creating a new user who will be tagged as an admin.
+This logs the alert for a given employee.  This is triggered when an employee enters the range of a beacon and/or moves closer or further from it.
 
-**URL** /organizations
+**URL** /alerts
 
 **Method** POST
 
 **Request**
+
+*Headers*
+
+auth-token *(Required)*
     
 
 | Parameter        | Type           | Description  |
 | ------------- |:-------------:|:----- |
-| username  | String | ​*(Required)*​  unique username.  This will also become the owner of the org/team |
-| password    | String      |  ​*(Required)*​  Password for the user |
-| name | String | ​*(Required)*​ Unique name of team/organization |
+| uuid | integer | ​*(Required)*​ The UUID for the beacons   |
+| major | String      |  ​*(Required)*​  Customizable in V2.0 |
+| minor | String | ​*(Required)*​ Customizable in V2.0 |
+| state | String | *(Required)* Signifies the distance from the beacon the employee is.  Sent from the beacons. |
+| duration | integer | *(Required)* Length of time in seconds an employee has been in a given zone |
+
 
 
 **Response**
