@@ -412,27 +412,56 @@ auth-token *(Required)*
 
 If successful, you will receive:
 
-    Status Code: 201 - Created
-    
-```json
-    { "organization": 
-            { "organization_id": 1,
-              "name": "nameoforghere"
-              "owner": "usernameofownerhere"
-              "auth_token: "The Auth Token for the Owner"
-            }
-    }
-            
-```
-​*As long as you get the above, the owner user was also succeesfully created.*​
+    A colorful message about how great you've done.   
 
 If unsuccessful, you will receive:
 
-    Status Code: 422 - Unprocessable Entity
-    
-```json
-    {"errors":[
-                "Organization has already been taken",
-                ]
-    }
-```
+    A whole bunch of gibberish you probably won't understand.  Try not to ask too many questions.  It will be in json format.
+
+###<a name="alert-delete"></a>Deleting an Alert
+
+In the EXTREMELY rare occurrance you need to delete an alert - for instance, to cover your tracks because you are an unethical tyrant - this method provies the ability to do so.  Deletes an alert from the databas.
+
+**URL** /alerts
+
+**Method** DELETE
+
+**Request**
+
+*Headers*
+
+auth-token *(Required)*
+
+**Response**
+
+If successful, you will receive:
+
+    Nothing.  Absolutely nothing. 
+
+If unsuccessful, you will receive:
+
+    A stern talking to because how could you screw this up?
+
+###<a name="alert-index"></a>Index of Alerts
+
+For displaying all active alerts and updates.  This is where the bulk of the work and information is displayed.
+
+**URL** /alerts
+
+**Method** GET
+
+**Request**
+
+*Headers*
+
+auth-token *(Required)*
+
+**Response**
+
+If successful, you will receive:
+
+``` A bunch of code. ```
+
+If unsuccessful, you will receive:
+
+    An error message telling you exactly what you screwed up, you amateur.  
