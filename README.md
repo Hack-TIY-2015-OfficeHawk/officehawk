@@ -47,6 +47,7 @@ If successful, you will receive:
 			{ "organization_id": 1,
 			  "name": "nameoforghere"
 			  "owner": "usernameofownerhere"
+			  "auth_token: "The Auth Token for the Owner"
 			}
 	}
 			

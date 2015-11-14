@@ -5,6 +5,7 @@ class AlertsController < ApplicationController
   # GET /alerts.json
   def index
     @alerts = Alert.all
+    render "index.json.jbuilder", status: :ok
   end
 
   # POST /alerts
@@ -15,17 +16,6 @@ class AlertsController < ApplicationController
         render "create.json.jbuilder", status: :created
       else
         render json: { errors: @organization.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /alerts/1
-  # PATCH/PUT /alerts/1.json
-  def update
-    @alert.update(organization_params)
-      if @alert.save
-        render "update.json.jbuilder", status: :ok
-      else
-        render json: { errors: @alert.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -43,6 +33,6 @@ class AlertsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def alert_params
-      params.require(:alert).permit(:beacon, :state, :duration, :employee_id)
+      params.require(:alert).permit(:beacon_id, :state, :duration, :employee_id)
     end
 end
