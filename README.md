@@ -66,7 +66,7 @@ If unsuccessful, you will receive:
 
 ###<a name="emp-new"></a>New
 
-Sign up a new employee for your team/organization
+Sign up a new employee for your team/organization, must be logged in as an ADMIN user by providing their auth_token as a header
 
 **URL** /employees
 
@@ -117,6 +117,7 @@ Login an existing employee
 
 **Method** POST
 
+
 **Request**
 	
 | Parameter        | Type           | Description  |
@@ -151,30 +152,36 @@ If unsuccessful, you will receive:
 
 ###<a name="emp-list"></a>List Employees for an Org
 
-List all employees for an organization, must be logged in as an ADMIN user
+List all employees for an organization, must be logged in as an ADMIN user or provide the auth_token for one as a header
 
-**URL** /organizations/:organization_id/employees
+**URL** /employees
 
-**Method** POST
+**Method** GET
+
+**Headers**
+
+auth_token *(Required)*
 
 **Request**
-	
-| Parameter        | Type           | Description  |
-| ------------- |:-------------:|:----- |
-| username  | String | *(Required)*  existing employee's username for the organiation id provided |
-| password | String | *(Requred)* employee's password |
 
 **Response**
 
 If successful, you will receive:
 
-	Status Code: 201 - Created
+	Status Code: 200 - OK
 	
 ```json
 {
-  "success": "dan logged in successfully",
-  "username": "dan",
-  "auth_token": "f74ef72a9c26cc05ac181aab3083521f"
+  "employees": [
+    {
+      "id": 3,
+      "username": "terri"
+    },
+    {
+      "id": 4,
+      "username": "mac"
+    }
+  ]
 }
 			
 ```
@@ -191,11 +198,15 @@ If unsuccessful, you will receive:
 
 ###<a name="emp-update"></a>Update Employee
 
-Update employee username, must be logged in as an ADMIN user
+Update employee username, must be logged in as an ADMIN user by providing their auth_token as a header
 
 **URL** /employees/:employee_id
 
 **Method** PUT
+
+**Headers**
+
+auth_token *(Required)*
 
 **Request**
 	
@@ -207,7 +218,7 @@ Update employee username, must be logged in as an ADMIN user
 
 If successful, you will receive:
 
-	Status Code: 201 - Created
+	Status Code: 200 - OK
 	
 ```json
 {
@@ -222,5 +233,41 @@ If unsuccessful, you will receive:
 ```json
 {
   "errors": "You don't have permission to update that employee"
+}
+```
+
+###<a name="emp-update"></a>Delete Employee
+
+Delete an employee from a team/org, must be logged in as an ADMIN user by providing their auth_token as a header
+
+**URL** /employees/:employee_id
+
+**Method** DELETE
+
+**Request**
+	
+**Headers**
+
+auth_token *(Required)*
+
+**Response**
+
+If successful, you will receive:
+
+	Status Code: 200 - OK
+	
+```json
+{
+  "success": "Employee delete successfully"
+}		
+```
+
+If unsuccessful, you will receive:
+
+	Status Code: 401 - Unauthorized
+	
+```json
+{
+  "errors": "You don't have permission to delete that employee"
 }
 ```
