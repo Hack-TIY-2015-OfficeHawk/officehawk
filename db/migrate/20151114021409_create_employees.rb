@@ -1,12 +1,14 @@
 class CreateEmployees < ActiveRecord::Migration
   def change
     create_table :employees do |t|
-      t.string :name, null: false
-      t.string :password, null: false
-      t.string :organization, null: false
+      t.string :username, null: false
+      t.string :password_digest, null: false
+      t.integer :organization_id, null: false
       t.boolean :admin, default: false
 
       t.timestamps null: false
     end
+
+    add_index :employees, [:organization, :username], unique: true
   end
 end
