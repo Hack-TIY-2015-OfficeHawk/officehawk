@@ -4,3 +4,5 @@ json.organization do
   json.owner @organization.owner
 
 end
+
+json.auth_token @owner.auth_token
