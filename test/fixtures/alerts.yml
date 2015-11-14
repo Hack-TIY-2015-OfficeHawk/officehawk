@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  beacon: MyString
+  state: MyString
+  duration: 1
+  employee_id: 1
+
+two:
+  beacon: MyString
+  state: MyString
+  duration: 1
+  employee_id: 1
