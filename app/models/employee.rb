@@ -1,8 +1,11 @@
 class Employee < ActiveRecord::Base
+  has_secure_password
   has_many :alerts
   belongs_to :organization
   has_many :beacons, through: :alerts
 
+
+  before_validation :ensure_auth_token
 
   validates_presence_of :username, :password_digest, :organization_id
   validates_uniqueness_of :username, scope: :organization_id
