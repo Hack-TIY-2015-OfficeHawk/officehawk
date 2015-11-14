@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   post "/employees", to: "employees#new"
   post "/employees/login", to: "employees#create"
   put "/employees/:id", to: "employees#update"
-  delete "/employees/:id", to: "employees#delete"
+  delete "/employees/:id", to: "employees#destroy"
 
   resources :alerts
 end

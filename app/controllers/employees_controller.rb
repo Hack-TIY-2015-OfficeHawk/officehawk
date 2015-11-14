@@ -2,11 +2,11 @@ class EmployeesController < ApplicationController
   ## TODO not sure if we need this??
   before_action :set_employee, only: [:update, :destroy]
   before_action :authenticate_employee!, only: [:index, :update, :destroy]
-  before_action :set_organization, only: [:index, :update, :destroy]
+  before_action :set_organization, only: [:new, :index, :update, :destroy]
 
   def index
     if current_employee.admin
-      @employees = current_employee.organization.employees.all
+      @employees = @org.employees.all
       render "index.json.jbuilder", status: :ok
     else
       render json: { errors: "You need to be an admin to do that" }
@@ -14,17 +14,8 @@ class EmployeesController < ApplicationController
   end
 
   def new
-    if org.employees.count == 0
-      @employee = Employee.new(username: params[:username],
-                               password: params[:password],
-                               organization_id: params[:organization_id],
-                               admin: true)
-    else
-      @employee = Employee.new(username: params[:username],
-                               password: params[:password],
-                               organization_id: params[:organization_id],
-                               admin: false)
-    end
+      @employee = @org.employees.new(username: params[:username],
+                               password: params[:password])
 
     if @employee.save
       render "new.json.jbuilder", status: :created
@@ -44,7 +35,8 @@ class EmployeesController < ApplicationController
 
   def update
     if current_employee.admin
-      deck.update(employee_params)
+      @employee.update(username: params[:username])
+
       render json: { success: "Employee updated successfully" }, status: :ok
     else
       render json: { errors: "You don't have permission to update that employee" }, status: :unathorized
@@ -59,8 +51,6 @@ class EmployeesController < ApplicationController
       render json: { errors: "You don't have permission to delete that employee" }, status: :unauthorized
     end
   end
-end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -69,13 +59,12 @@ end
     end
 
     def set_organization
-      @org = Organization.find_by(id: params[:organization_id])
+      @org = Organization.find_by(id: current_employee.organization_id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_params
       params.require(:employee).permit(:username)
     end
-
 
 end

@@ -6,34 +6,33 @@ Welcome to the office hawk API docs!
 
 * [Organization Methods](#org-methods)
 	* [Registration](#org-registration)
-	* [Editing](#org-edit)
-	* [Deleting](#org-delete)
-	* [Listing Registered Orgs](#org-index)
 
 	
 * [Employee Methods](#emp-methods)
 	* [New](#emp-new)
 	* [Login](#emp-login)
 	* [List Employees](#emp-list)
+	* [Update Employee](#emp-update)
 
 ##<a name="org-methods"></a>Organization Methods
 
 ###<a name="org-registration"></a>Registration
 
-This request triggers creating a new organiztation as well as creating a new user who will be tagged as an admin.
+Register a new organization
 
-**URL** /organizations
+**URL** /<PUT ROUTE HERE>
 
-**Method** POST
+**Method** < GET POST PATCH OR DELETE>
 
 **Request**
 	
 
 | Parameter        | Type           | Description  |
 | ------------- |:-------------:|:----- |
-| username  | String | *(Required)*  unique username.  This will also become the owner of the org/team |
-| password    | String      |  *(Required)*  Password for the user |
-| name | String | *(Required)* Unique name of team/organization |
+| username  | String | *(Required)*  unique username |
+| fullname      | String      |  *(Required)*   User's first and last name |
+| email | String      | *(Required)*   User's email (must follow format text@text.text) |
+| password | String | *(Requred)* User's password
 
 
 **Response**
@@ -43,112 +42,9 @@ If successful, you will receive:
 	Status Code: 201 - Created
 	
 ```json
-	{ "organization": 
-			{ "organization_id": 1,
-			  "name": "nameoforghere"
-			  "owner": "usernameofownerhere"
-			}
-	}
-			
-```
-*As long as you get the above, the owner user was also succeesfully created.*
-
-If unsuccessful, you will receive:
-
-	Status Code: 422 - Unprocessable Entity
-	
-```json
-	{"errors":[
-				"Organization has already been taken",
-				]
-	}
-```
-
-###<a name="org-edit"></a>Editing
-
-Editing the owner and/or name of an organization.  The :id in the route refers to the organization's unique id (organization.id)
-
-NOTE: for owner parameter, the username must be EXACTLY THE SAME AS THE USERNAME USED TO REGISTER THE EMPLOYEE!  Misspelled usernames will throw an error when trying to change owners/admins
-
-**URL** /organizations/:id
-
-**Method** PUT
-
-**Request**
-	
-
-| Parameter        | Type           | Description  |
-| ------------- |:-------------:|:----- |
-| name  | String | *(Required)*  unique organization name |
-| owner     | String      |  *(Required)*   Username of the org owner |
-
-
-**Response**
-
-If successful, you will receive:
-
-```Nothing.  And be thankful for it.```
-
-If unsuccessful, you will receive:
-
-	Status Code: 422 - Unprocessable Entity
-	
-```json
-	{"errors":[
-				"What you messed up will be in here",
-				]
-	}
-```
-
-###<a name="org-delete"></a>Deleting an Org
-
-Deleting an org (v2: and all associated entities)
-
-**URL** /organizations
-
-**Method** DELETE
-
-**Request**
-	
-
-| Parameter        | Type           | Description  |
-| ------------- |:-------------:|:----- |
-| organization_id  | Integer | *(Required)*  The ID of the org you want to destroy |
-
-**Response**
-
-If successful, you will receive:
-
-```A very sad message about how you destroyed everything.```
-
-If unsuccessful, you will receive:
-
-`A whole lot of nothing because really how could you screw this up?`
-
-###<a name="org-index"></a>List All Organizations
-
-Get a list of all registered organizations
-
-**URL** /organizations
-
-**Method** GET
-
-**Request**
-	
-*There are no parameters required for this request.  Orgs are searchable by ID, Name and Owner (which will be a username from the Employees database)*
-
-
-**Response**
-
-If successful, you will receive a list of all registered organizations:
-
-	Status Code: 200 - OK
-	
-```json
-	{ "organization": 
-			{ "organization_id": 1,
-			  "name": "nameoforghere"
-			  "owner": "usernameofownerhere"
+	{ "user": 
+			{ "user_id": 1,
+			  "access_key": "biglongaccesskeyhere"
 			}
 	}
 			
@@ -156,17 +52,29 @@ If successful, you will receive a list of all registered organizations:
 
 If unsuccessful, you will receive:
 
-`Probably nothing.  Nobody has ever failed this.`
+	Status Code: 422 - Unprocessable Entity
+	
+```json
+	{"errors":[
+				"Email has already been taken",
+				"Username has already been taken"
+				]
+	}
+```
 
 ##<a name="emp-methods"></a>Employee Methods
 
 ###<a name="emp-new"></a>New
 
-Sign up a new employee
+Sign up a new employee for your team/organization
 
-**URL** /organizations/:organization_id/employees/new
+**URL** /employees
 
 **Method** POST
+
+**Headers**
+
+auth_token *(Required)*
 
 **Request**
 	
@@ -205,7 +113,7 @@ If unsuccessful, you will receive:
 
 Login an existing employee
 
-**URL** /organizations/:organization_id/employees/new
+**URL** /employees/login
 
 **Method** POST
 
@@ -233,7 +141,7 @@ If successful, you will receive:
 
 If unsuccessful, you will receive:
 
-	Status Code: 422 - Unprocessable Entity
+	Status Code: 401 - Uauthorized
 	
 ```json
 {
@@ -285,7 +193,7 @@ If unsuccessful, you will receive:
 
 Update employee username, must be logged in as an ADMIN user
 
-**URL** /employees/:id
+**URL** /employees/:employee_id
 
 **Method** PUT
 
@@ -303,19 +211,16 @@ If successful, you will receive:
 	
 ```json
 {
-  "success": "dan logged in successfully",
-  "username": "dan",
-  "auth_token": "f74ef72a9c26cc05ac181aab3083521f"
-}
-			
+  "success": "Employee updated successfully"
+}		
 ```
 
 If unsuccessful, you will receive:
 
-	Status Code: 422 - Unprocessable Entity
+	Status Code: 401 - Unauthorized
 	
 ```json
 {
-  "errors": "username or password incorrect"
+  "errors": "You don't have permission to update that employee"
 }
 ```
