@@ -7,38 +7,25 @@ class AlertsController < ApplicationController
     @alerts = Alert.all
   end
 
-  # GET /alerts/1
-  # GET /alerts/1.json
-  def show
-  end
-
   # POST /alerts
   # POST /alerts.json
   def create
     @alert = Alert.new(alert_params)
-
-    respond_to do |format|
       if @alert.save
-        format.html { redirect_to @alert, notice: 'Alert was successfully created.' }
-        format.json { render :show, status: :created, location: @alert }
+        render "create.json.jbuilder", status: :created
       else
-        format.html { render :new }
-        format.json { render json: @alert.errors, status: :unprocessable_entity }
-      end
+        render json: { errors: @organization.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /alerts/1
   # PATCH/PUT /alerts/1.json
   def update
-    respond_to do |format|
-      if @alert.update(alert_params)
-        format.html { redirect_to @alert, notice: 'Alert was successfully updated.' }
-        format.json { render :show, status: :ok, location: @alert }
+    @alert.update(organization_params)
+      if @alert.save
+        render "update.json.jbuilder", status: :ok
       else
-        format.html { render :edit }
-        format.json { render json: @alert.errors, status: :unprocessable_entity }
-      end
+        render json: { errors: @alert.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -46,10 +33,6 @@ class AlertsController < ApplicationController
   # DELETE /alerts/1.json
   def destroy
     @alert.destroy
-    respond_to do |format|
-      format.html { redirect_to alerts_url, notice: 'Alert was successfully destroyed.' }
-      format.json { head :no_content }
-    end
   end
 
   private

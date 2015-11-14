@@ -1,6 +1,6 @@
 class OrganizationsController < ApplicationController
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_employee!, only: [:update, :destroy]
   # GET /organizations
   # GET /organizations.json
   def index
@@ -38,8 +38,8 @@ class OrganizationsController < ApplicationController
   # DELETE /organizations/1.json
   def destroy
     @organization.destroy
-    end
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -49,6 +49,7 @@ class OrganizationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def organization_params
-      params.require(:organization, :name).permit(:member_count, :owner)
+      params.permit(:name, :owner)
     end
+
 end
