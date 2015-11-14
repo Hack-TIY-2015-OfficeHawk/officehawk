@@ -1,13 +1,20 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  password: MyString
-  organization: MyString
+  username: terri
+  password_digest: passworddigest1
+  auth_key: authkey1
+  organization: one
   admin: false
 
 two:
-  name: MyString
-  password: MyString
-  organization: MyString
+  username: dan
+  password_digest: MyString
+  organization: two
   admin: false
+
+adminone:
+  username: mac
+  password_digest: MyString
+  organization: one
+  admin: true

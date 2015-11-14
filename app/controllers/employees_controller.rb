@@ -1,11 +1,12 @@
 class EmployeesController < ApplicationController
   ## TODO not sure if we need this??
   before_action :set_employee, only: [:update, :destroy]
-  before_action :authenticate_employee!, only: [:update, :destroy]
+  before_action :authenticate_employee!, only: [:index, :update, :destroy]
+  before_action :set_organization, only: [:new, :index, :update, :destroy]
 
   def index
     if current_employee.admin
-      @employees = Employee.all
+      @employees = @org.employees.all
       render "index.json.jbuilder", status: :ok
     else
       render json: { errors: "You need to be an admin to do that" }
@@ -13,9 +14,8 @@ class EmployeesController < ApplicationController
   end
 
   def new
-    @employee = Employee.new(username: params[:username],
-                             password: params[:password],
-                             organization_id: params[:organization_id])
+      @employee = @org.employees.new(username: params[:username],
+                               password: params[:password])
 
     if @employee.save
       render "new.json.jbuilder", status: :created
@@ -34,12 +34,9 @@ class EmployeesController < ApplicationController
   end
 
   def update
-    if params[:username].nil? && params[:admin].nil?
-      render json: { errors: "username and admin fields cannot both be blank" }, status: :unprocessable_entity
-    end
+    if current_employee.admin
+      @employee.update(username: params[:username])
 
-    if @employee.id == current_employee.id
-      deck.update(employee_params)
       render json: { success: "Employee updated successfully" }, status: :ok
     else
       render json: { errors: "You don't have permission to update that employee" }, status: :unathorized
@@ -47,13 +44,13 @@ class EmployeesController < ApplicationController
   end
 
   def destroy
-    if @employee.id == current_employee.id
+    if current_employee.admin
       @employee.destroy
       render json: { success: "Employee deleted successfully" }, status: :ok
     else
       render json: { errors: "You don't have permission to delete that employee" }, status: :unauthorized
+    end
   end
-end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -61,8 +58,13 @@ end
       @employee = Employee.find(params[:id])
     end
 
+    def set_organization
+      @org = Organization.find_by(id: current_employee.organization_id)
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_params
-      params.require(:employee).permit(:username, :admin)
+      params.require(:employee).permit(:username)
     end
+
 end
