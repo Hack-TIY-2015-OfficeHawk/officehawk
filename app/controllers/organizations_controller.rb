@@ -15,9 +15,18 @@ class OrganizationsController < ApplicationController
   # POST /organizations
   # POST /organizations.json
   def create
-    @organization = Organization.new(organization_params)
+    @organization = Organization.new(name: params[:name], owner: params[:username]) #owner: params[:username]
     if @organization.save
+      @owner = @organization.employees.new(username: params[:username], 
+                               password: params[:password], 
+                               organization_id: @organization.id,
+                               admin: true)
+      if @owner.save
       render "create.json.jbuilder", status: :created
+    else
+      render json: { errors: @owner.errors.full_messages }, status: :unprocessable_entity
+    end
+
     else
       render json: { errors: @organization.errors.full_messages }, status: :unprocessable_entity
     end
@@ -38,6 +47,7 @@ class OrganizationsController < ApplicationController
   # DELETE /organizations/1.json
   def destroy
     @organization.destroy
+    render json: { success: "Organization deleted successfully" }, status: :ok
   end
 
 

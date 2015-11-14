@@ -59,6 +59,7 @@ class EmployeesController < ApplicationController
       render json: { errors: "You don't have permission to delete that employee" }, status: :unauthorized
     end
   end
+end
 
 
   private
