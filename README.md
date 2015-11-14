@@ -42,12 +42,13 @@ If successful, you will receive:
 	Status Code: 201 - Created
 	
 ```json
-	{ "user": 
-			{ "user_id": 1,
-			  "access_key": "biglongaccesskeyhere"
+	{ "organization": 
+			{ "organization_id": 1,
+			  "name": "nameoforghere"
+			  "owner": "usernameofownerhere"
+			  "auth_token: "The Auth Token for the Owner"
 			}
-	}
-			
+	}			
 ```
 
 If unsuccessful, you will receive:

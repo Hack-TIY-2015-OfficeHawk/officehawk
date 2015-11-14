@@ -1,4 +1,6 @@
-json.array!(@organizations) do |organization|
-  json.extract! organization, :id, :name, :owner
-  json.url organization_url(organization, format: :json)
+json.organization @organizations do |organization|
+  json.id organization.id
+  json.name organization.name
+  json.owner organization.owner
+
 end
