@@ -1,6 +1,6 @@
 # Postgres ftw!
 default: &default
-  adapter: postgres
+  adapter: postgresql
   pool: 5
   timeout: 5000
 
