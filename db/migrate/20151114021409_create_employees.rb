@@ -9,6 +9,6 @@ class CreateEmployees < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    add_index :employees, [:organization, :username], unique: true
+    add_index :employees, [:organization_id, :username], unique: true
   end
 end
