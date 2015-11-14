@@ -12,15 +12,6 @@ class AlertsController < ApplicationController
   def show
   end
 
-  # GET /alerts/new
-  def new
-    @alert = Alert.new
-  end
-
-  # GET /alerts/1/edit
-  def edit
-  end
-
   # POST /alerts
   # POST /alerts.json
   def create

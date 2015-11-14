@@ -1,6 +1,8 @@
 class Employee < ActiveRecord::Base
   has_many :alerts
   belongs_to :organization
+  has_many :beacons, through: :alerts
+
 
   validates_presence_of :username, :password_digest, :organization_id
   validates_uniqueness_of :username, scope: :organization_id
