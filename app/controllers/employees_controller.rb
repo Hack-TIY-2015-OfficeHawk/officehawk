@@ -4,7 +4,12 @@ class EmployeesController < ApplicationController
   before_action :authenticate_employee!, only: [:update, :destroy]
 
   def index
-    @employees = Employee.all
+    if current_employee.admin
+      @employees = Employee.all
+      render "index.json.jbuilder", status: :ok
+    else
+      render json: { errors: "You need to be an admin to do that" }
+    end
   end
 
   def new
