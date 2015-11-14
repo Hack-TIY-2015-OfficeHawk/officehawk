@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Beacon:</strong>
+  <%= @alert.beacon %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @alert.state %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @alert.duration %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @alert.employee_id %>
+</p>
+
+<%= link_to 'Edit', edit_alert_path(@alert) %> |
+<%= link_to 'Back', alerts_path %>
