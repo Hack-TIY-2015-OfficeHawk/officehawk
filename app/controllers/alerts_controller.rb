@@ -19,7 +19,7 @@ class AlertsController < ApplicationController
                        state: params[:state],
                        employee_id: current_employee.id)
       if @alert.save
-        render "create.json.jbuilder", status: :created
+        render json: { success: "alert created successfully" }, status: :created
       else
         render json: { errors: @alert.errors.full_messages }, status: :unprocessable_entity
     end
