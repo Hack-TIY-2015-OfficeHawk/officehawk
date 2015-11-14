@@ -1,3 +1,4 @@
 class Alert < ActiveRecord::Base
-  belongs_to :employees
+  belongs_to :employee
+  belongs_to :beacon
 end
