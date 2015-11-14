@@ -8,5 +8,7 @@ Rails.application.routes.draw do
   put "/employees/:id", to: "employees#update"
   delete "/employees/:id", to: "employees#destroy"
 
+  resources :beacons, only: [ :index, :create, :update, :destroy ]
+
   resources :alerts
 end
