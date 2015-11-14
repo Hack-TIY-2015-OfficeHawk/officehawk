@@ -6,5 +6,6 @@ class CreateOrganizations < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    add_index :organizations, :name, unique: true
   end
 end
