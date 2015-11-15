@@ -25,6 +25,7 @@ class EmployeesController < ApplicationController
                                    email: params[:email])
 
     if @employee.save
+      @url = @employee.email.nil? ? random_pic : @employee.gravatar_url
       render "new.json.jbuilder", status: :created
     else
       render json: { errors: @employee.errors.full_messages }, status: :unprocessable_entity
