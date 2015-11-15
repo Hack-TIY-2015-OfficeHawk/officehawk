@@ -1,10 +1,12 @@
 class Employee < ActiveRecord::Base
+  include Gravtastic
+  gravtastic
+
   has_secure_password
   has_many :alerts
   belongs_to :organization
   has_many :beacons, through: :alerts
   # has_many :organizations, through: :alerts
-
 
   before_validation :ensure_auth_token
 
