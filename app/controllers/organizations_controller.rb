@@ -20,6 +20,7 @@ class OrganizationsController < ApplicationController
       @owner = @organization.employees.new(username: params[:username], 
                                password: params[:password], 
                                organization_id: @organization.id,
+                               email: params[:email],
                                admin: true)
       if @owner.save
       render "create.json.jbuilder", status: :created
@@ -59,7 +60,7 @@ class OrganizationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def organization_params
-      params.permit(:name, :owner)
+      params.permit(:name, :owner, :email)
     end
 
 end

@@ -10,12 +10,8 @@ class EmployeesController < ApplicationController
   end
 
   def index
-    if current_employee.admin
-      @employees = @org.employees.all
-      render "index.json.jbuilder", status: :ok
-    else
-      render json: { errors: "You need to be an admin to do that" }
-    end
+    @employees = @org.employees.all
+    render "index.json.jbuilder", status: :ok
   end
 
   def new
@@ -25,7 +21,8 @@ class EmployeesController < ApplicationController
       @org = Organization.find_by(name: params[:name])
     end
     @employee = @org.employees.new(username: params[:username],
-                                   password: params[:password])
+                                   password: params[:password],
+                                   email: params[:email])
 
     if @employee.save
       render "new.json.jbuilder", status: :created
@@ -45,7 +42,7 @@ class EmployeesController < ApplicationController
 
   def update
     if current_employee.admin
-      @employee.update(username: params[:username])
+      @employee.update(username: params[:username], email: params[:email])
 
       render json: { success: "Employee updated successfully" }, status: :ok
     else
