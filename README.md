@@ -23,6 +23,12 @@ Welcome to the office hawk API docs!
 	* [Delete Alert](#alert-delete)
 	* [Index of Alerts](#alert-index)
 
+* [Beacon Methods](#bcn-methods)
+	* [New Beacon](#bcn-new)
+	* [Beacon List](#bcn-index)
+	* [Editing a Beacon](#bcn-update)
+	* [Deleting a Beacon](#bcn-destroy)
+
 
 ##<a name="org-methods"></a>Organization Methods
 
@@ -465,3 +471,87 @@ If successful, you will receive:
 If unsuccessful, you will receive:
 
     An error message telling you exactly what you screwed up, you amateur.  
+    
+##<a name="bcn-methods"></a>Beacon Methods
+
+###<a name="bcn-new"></a>Adding a new Beacon
+
+This allows you to add a new beacon to your organization, which will allow you to track alerts from a new zone.
+
+NOTE:
+Major and Minor can be considered equivalent to "room" and "place in the room".  
+
+For example: MAJOR = Kitchen, Minor = Coffee Maker
+
+**URL** /beacons
+
+**Method** POST
+
+**Request**
+    
+
+| Parameter        | Type           | Description  |
+| ------------- |:-------------:|:----- |
+| uuid  | String | ​*(Required)*​ The UUID of the beacon |
+| major | String      |  ​*(Required)* The major identifier, customizable in V2.0 |
+| minor | String | ​*(Required)*​ The minor identifier, customizable in V2.0 |
+| organization_id | integer | *(Required)* The id of the organization the beacons are registered to |
+
+
+**Response**
+
+If successful, you will receive:
+
+    Status Code: 201 - Created
+    
+```
+json.success "Beacon created successfully"
+json.beacon_id @beacon.id            
+```
+
+
+If unsuccessful, you will receive:
+
+    Status Code: 422 - Unprocessable Entity
+    
+```json
+    {"errors":[
+                "YOU FUCKED UP",
+                ]
+    }
+```
+
+###<a name="bcn-index"></a>List of all Beacons
+
+This will return a list of all organization-registered beacons and their associated information.
+
+**URL** /beacons
+
+**Method** GET
+
+**Request**
+
+**Response**
+
+If successful, you will receive:
+
+```
+json.beacons do
+  json.array!(@beacons) do |beacon|
+    json.extract! beacon, :id, :uuid, :major, :minor
+  end
+end
+        
+```
+
+
+If unsuccessful, you will receive:
+
+    Status Code: 404
+    
+```json
+    {"errors":[
+                "YOU FUCKED UP.  Probably aren't looking for the right things...or you aren't authorized.  Either way, the Hawk has been notified.  Run while you can.",
+                ]
+    }
+```
