@@ -6,4 +6,4 @@ json.organization do
 end
 
 json.auth_token @owner.auth_token
-json.gravatar_url @owner.gravatar_url
+json.gravatar_url @owner.email.nil? ? random_pic : @owner.gravatar_url
