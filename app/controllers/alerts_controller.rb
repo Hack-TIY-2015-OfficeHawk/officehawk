@@ -19,7 +19,11 @@ class AlertsController < ApplicationController
                        state: params[:state],
                        employee_id: current_employee.id)
       if @alert.save
+<<<<<<< HEAD
        render json: { success: "PREY ACQUIRED! TRACKING MODE ACTIVATED! SCREEEEEEEEE!" }, status: :ok
+=======
+        render json: { success: "alert created successfully" }, status: :created
+>>>>>>> 289d58a27fdef7b53e64fa6ba747440a61c49539
       else
         render json: { errors: @alert.errors.full_messages }, status: :unprocessable_entity
     end
@@ -34,7 +38,7 @@ class AlertsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_beacon
-      @beacon = Beacon.where(uuid: params[:uuid]).where(major: params[:major]).where(minor: params[:minor])
+      @beacon = Beacon.find_by(organization_id: current_employee.organization_id, uuid: params[:uuid], major: params[:major], minor: params[:minor])
     end
 
 
