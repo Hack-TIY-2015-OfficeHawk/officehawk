@@ -2,6 +2,8 @@
 
 Welcome to the office hawk API docs!
 
+We're watching you...
+
 **Methods**
 
 * [Organization Methods](#org-methods)
@@ -10,7 +12,6 @@ Welcome to the office hawk API docs!
     * [Deleting](#org-delete)
     * [Listing Registered Orgs](#org-index)
 
-    
 * [Employee Methods](#emp-methods)
     * [Login](#emp-login)
     * [Registration](#emp-new)
@@ -22,6 +23,12 @@ Welcome to the office hawk API docs!
 	* [New Alert](#alert-new)
 	* [Delete Alert](#alert-delete)
 	* [Index of Alerts](#alert-index)
+
+* [Beacon Methods](#bcn-methods)
+	* [New Beacon](#bcn-new)
+	* [Beacon List](#bcn-index)
+	* [Editing a Beacon](#bcn-update)
+	* [Deleting a Beacon](#bcn-destroy)
 
 
 ##<a name="org-methods"></a>Organization Methods
@@ -84,6 +91,10 @@ NOTE: for owner parameter, the username must be EXACTLY THE SAME AS THE USERNAME
 **Method** PUT
 
 **Request**
+
+*HEADERS*: 
+
+auth-token *(Required)*
     
 
 | Parameter        | Type           | Description  |
@@ -228,7 +239,7 @@ Login an existing employee
 	
 | Parameter        | Type           | Description  |
 | ------------- |:-------------:|:----- |
-| username  | String | *(Required)*  existing employee's username for the organiation id provided |
+| username | String | *(Required)*  existing employee's username for the organiation id provided |
 | password | String | *(Requred)* employee's password |
 
 **Response**
@@ -266,7 +277,7 @@ List all employees for an organization, must be logged in as an ADMIN user or pr
 
 **Headers**
 
-auth_token *(Required)*
+auth-token *(Required)*
 
 **Request**
 
@@ -312,7 +323,7 @@ Update employee username, must be logged in as an ADMIN user by providing their 
 
 **Headers**
 
-auth_token *(Required)*
+auth-token *(Required)*
 
 **Request**
 	
@@ -354,7 +365,7 @@ Delete an employee from a team/org, must be logged in as an ADMIN user by provid
 	
 **Headers**
 
-auth_token *(Required)*
+auth-token *(Required)*
 
 **Response**
 
@@ -381,20 +392,115 @@ If unsuccessful, you will receive:
 
 ###<a name="alert-new"></a>New Alert
 
-This request triggers creating a new organiztation as well as creating a new user who will be tagged as an admin.
+This logs the alert for a given employee.  This is triggered when an employee enters the range of a beacon and/or moves closer or further from it.
 
-**URL** /organizations
+**URL** /alerts
 
 **Method** POST
 
 **Request**
+
+*Headers*
+
+auth-token *(Required)*
     
 
 | Parameter        | Type           | Description  |
 | ------------- |:-------------:|:----- |
-| username  | String | ​*(Required)*​  unique username.  This will also become the owner of the org/team |
-| password    | String      |  ​*(Required)*​  Password for the user |
-| name | String | ​*(Required)*​ Unique name of team/organization |
+| uuid | integer | ​*(Required)*​ The UUID for the beacons   |
+| major | String      |  ​*(Required)*​  Customizable in V2.0 |
+| minor | String | ​*(Required)*​ Customizable in V2.0 |
+| state | String | *(Required)* Signifies the distance from the beacon the employee is.  Sent from the beacons. |
+| duration | integer | *(Required)* Length of time in seconds an employee has been in a given zone |
+
+
+
+**Response**
+
+If successful, you will receive:
+
+    A colorful message about how great you've done.   
+
+If unsuccessful, you will receive:
+
+    A whole bunch of gibberish you probably won't understand.  Try not to ask too many questions.  It will be in json format.
+
+###<a name="alert-delete"></a>Deleting an Alert
+
+In the EXTREMELY rare occurrance you need to delete an alert - for instance, to cover your tracks because you are an unethical tyrant - this method provies the ability to do so.  Deletes an alert from the databas.
+
+**URL** /alerts
+
+**Method** DELETE
+
+**Request**
+
+*Headers*
+
+auth-token *(Required)*
+
+**Response**
+
+If successful, you will receive:
+
+    Nothing.  Absolutely nothing. 
+
+If unsuccessful, you will receive:
+
+    A stern talking to because how could you screw this up?
+
+###<a name="alert-index"></a>Index of Alerts
+
+For displaying all active alerts and updates.  This is where the bulk of the work and information is displayed.
+
+**URL** /alerts
+
+**Method** GET
+
+**Request**
+
+*Headers*
+
+auth-token *(Required)*
+
+**Response**
+
+If successful, you will receive:
+
+``` A bunch of code. ```
+
+If unsuccessful, you will receive:
+
+    An error message telling you exactly what you screwed up, you amateur.  
+    
+##<a name="bcn-methods"></a>Beacon Methods
+
+###<a name="bcn-new"></a>Adding a new Beacon
+
+This allows you to add a new beacon to your organization, which will allow you to track alerts from a new zone.
+
+NOTE:
+Major and Minor can be considered equivalent to "room" and "place in the room".  
+
+For example: MAJOR = Kitchen, Minor = Coffee Maker
+
+**URL** /beacons
+
+**Method** POST
+
+**Request**
+
+*Headers*
+
+auth-token *(Required)*
+    
+
+| Parameter        | Type           | Description  |
+| ------------- |:-------------:|:----- |
+| uuid  | String | ​*(Required)*​ The UUID of the beacon |
+| major | String      |  ​*(Required)* The major identifier, customizable in V2.0 |
+| minor | String | ​*(Required)*​ The minor identifier, customizable in V2.0 |
+| organization_id | integer | *(Required)* The id of the organization the beacons are registered to |
 
 
 **Response**
@@ -403,17 +509,11 @@ If successful, you will receive:
 
     Status Code: 201 - Created
     
-```json
-    { "organization": 
-            { "organization_id": 1,
-              "name": "nameoforghere"
-              "owner": "usernameofownerhere"
-              "auth_token: "The Auth Token for the Owner"
-            }
-    }
-            
 ```
-​*As long as you get the above, the owner user was also succeesfully created.*​
+json.success "Beacon created successfully"
+json.beacon_id @beacon.id            
+```
+
 
 If unsuccessful, you will receive:
 
@@ -421,7 +521,104 @@ If unsuccessful, you will receive:
     
 ```json
     {"errors":[
-                "Organization has already been taken",
+                "YOU FUCKED UP",
                 ]
     }
 ```
+
+###<a name="bcn-update"></a>Edit a Beacon
+
+This will return a list of all organization-registered beacons and their associated information.
+
+**URL** /beacons/:id
+
+**Method** PUT
+
+**Request**
+
+*Headers*
+
+auth-token *(Required)*
+
+| Parameter        | Type           | Description  |
+| ------------- |:-------------:|:----- |
+| uuid  | String | ​*(Required)*​ The UUID of the beacon |
+| major | String      |  ​*(Required)* The major identifier, customizable in V2.0 |
+| minor | String | ​*(Required)*​ The minor identifier, customizable in V2.0 |
+| organization_id | integer | *(Required)* The id of the organization the beacons are registered to |
+
+**Response**
+
+If successful, you will receive:
+
+```
+json: { success: "Beacon updated successfully" }, status: :ok
+        
+```
+
+
+If unsuccessful, you will receive:
+
+    Status Code: 404
+    
+```json
+    {"errors":[
+                "YOU FUCKED UP.  Check your parameters and try again.
+                ]
+    }
+```
+
+###<a name="bcn-index"></a>List of all Beacons
+
+This will return a list of all organization-registered beacons and their associated information.
+
+**URL** /beacons
+
+**Method** GET
+
+**Request**
+
+**Response**
+
+If successful, you will receive:
+
+```
+json.beacons do
+  json.array!(@beacons) do |beacon|
+    json.extract! beacon, :id, :uuid, :major, :minor
+  end
+end
+        
+```
+
+
+If unsuccessful, you will receive:
+
+    Status Code: 404
+    
+```json
+    {"errors":[
+                "YOU FUCKED UP.  Probably aren't looking for the right things...or you aren't authorized.  Either way, the Hawk has been notified.  Run while you can.",
+                ]
+    }
+```
+
+###<a name="bcn-destroy"></a>Delete a Beacon
+
+In the event you need to delete a beacon, this is the way to do it.
+
+**URL** /beacons/:id
+
+**Method** DELETE
+
+**Request**
+
+| Parameter        | Type           | Description  |
+| ------------- |:-------------:|:----- |
+| beacon_id  | integer | ​*(Required)*​ The unique ID of the beacon you'd like to delete |
+
+**Response**
+
+If successful, nothing happens.  What, you want a pretty status message or something?
+
+If unsuccessful, you should probably not be messing around with back-end commands, fam.
