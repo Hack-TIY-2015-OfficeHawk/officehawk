@@ -6,3 +6,5 @@ env:
   - DB=officehawk-test
 script:
   - RAILS_ENV=test bundle exec rake db:migrate test
+before_script:
+  - psql -c 'create database officehawk-test' -U postgres
