@@ -52,6 +52,7 @@ This request triggers creating a new organiztation as well as creating a new use
 | username  | String | ​*(Required)*​  unique username.  This will also become the owner of the org/team |
 | password    | String      |  ​*(Required)*​  Password for the user |
 | name | String | ​*(Required)*​ Unique name of team/organization |
+| email| String | Optional email address of owner |
 
 
 **Response**
@@ -65,8 +66,9 @@ If successful, you will receive:
             { "organization_id": 1,
               "name": "nameoforghere"
               "owner": "usernameofownerhere"
-              "auth_token: "The Auth Token for the Owner"
             }
+       "auth_token": "The Auth Token for the Owner"
+       "gravatar_url": "the image url for the email address of the owner"
     }
             
 ```
@@ -104,6 +106,7 @@ auth-token *(Required)*
 | ------------- |:-------------:|:----- |
 | name  | String | ​*(Required)*​  unique organization name |
 | owner     | String      |  ​*(Required)*​   Username of the org owner |
+| email | String | Optional email for org owner |
 
 
 **Response**
@@ -125,7 +128,7 @@ If unsuccessful, you will receive:
 
 ###<a name="org-delete"></a>Deleting an Org
 
-Deleting an org (v2: and all associated entities)
+Deleting an org and all associated entities
 
 **URL** /organizations
 
@@ -202,6 +205,7 @@ auth_token *(Required)*
 | ------------- |:-------------:|:----- |
 | username  | String | *(Required)*  unique username per organization (within an organizations two users cannot have the same username) |
 | password | String | *(Requred)* employee's password |
+| email | String | Optional employee ID (Gravatar Profile Pics supported) |
 
 **Response**
 
@@ -214,6 +218,7 @@ If successful, you will receive:
   "success": "dan created successfully",
   "username": "dan",
   "auth_token": "f74ef72a9c26cc05ac181aab3083521f"
+  "gravatar_url": "https://secure.gravatar.com/avatar/9432f06f93b436aad3926d4588780be8.png?r=PG"
 }
 			
 ```
@@ -231,7 +236,7 @@ If unsuccessful, you will receive:
 
 ###<a name="emp-login"></a>Login
 
-Login an existing employee
+Login an existing employee, gives you their auth_token and Gravatar profile pic (will default to a general pic if no email was provided)
 
 **URL** /employees/login
 
@@ -256,6 +261,7 @@ If successful, you will receive:
   "success": "dan logged in successfully",
   "username": "dan",
   "auth_token": "f74ef72a9c26cc05ac181aab3083521f"
+  "gravatar_url": "https://secure.gravatar.com/avatar/9432f06f93b436aad3926d4588780be8.png?r=PG"
 }
 			
 ```
@@ -272,7 +278,7 @@ If unsuccessful, you will receive:
 
 ###<a name="emp-list"></a>List Employees for an Org
 
-List all employees for an organization, must be logged in as an ADMIN user or provide the auth_token for one as a header
+List all employees for an organization
 
 **URL** /employees
 
@@ -296,10 +302,13 @@ If successful, you will receive:
     {
       "id": 3,
       "username": "terri"
+      "gravatar_url": "https://secure.gravatar.com/avatar/9432f06f93b436aad3926d4588780be8.png?r=PG"
+
     },
     {
       "id": 4,
       "username": "mac"
+      "gravatar_url": "https://secure.gravatar.com/avatar/9432f06f93b436aad3926d4588780be8.png?r=PG"
     }
   ]
 }
@@ -398,6 +407,7 @@ auth-token *(Required)*
 | Parameter        | Type           | Description  |
 | ------------- |:-------------:|:----- |
 | username  | String | *(Required)*  whatever you want to change the username to |
+| email | String | Optional email (tied to gravatar profile pic) |
 
 **Response**
 
@@ -423,7 +433,7 @@ If unsuccessful, you will receive:
 
 ###<a name="emp-delete"></a>Delete Employee
 
-Delete an employee from a team/org, must be logged in as an ADMIN user by providing their auth_token as a header
+Delete an employee from a team/org and any associated data, must be logged in as an ADMIN user by providing their auth_token as a header
 
 **URL** /employees/:employee_id
 

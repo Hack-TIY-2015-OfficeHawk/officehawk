@@ -10,12 +10,8 @@ class EmployeesController < ApplicationController
   end
 
   def index
-    if current_employee.admin
-      @employees = @org.employees.all
-      render "index.json.jbuilder", status: :ok
-    else
-      render json: { errors: "You need to be an admin to do that" }
-    end
+    @employees = @org.employees.all
+    render "index.json.jbuilder", status: :ok
   end
 
   def new
