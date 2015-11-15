@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 #
-#one:
-#  name: MyString
-#  uuid: MyString
-#
-#two:
-#  name: MyString
-#  uuid: MyString
+one:
+  minor: 1001
+  major: 100
+  uuid: one
+  organization: one
+
+two:
+  minor: 1003
+  major: 200
+  uuid: two
+  organization: two
