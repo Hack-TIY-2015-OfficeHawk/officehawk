@@ -2,6 +2,8 @@
 
 Welcome to the office hawk API docs!
 
+We're watching you...
+
 **Methods**
 
 * [Organization Methods](#org-methods)
@@ -10,7 +12,6 @@ Welcome to the office hawk API docs!
     * [Deleting](#org-delete)
     * [Listing Registered Orgs](#org-index)
 
-    
 * [Employee Methods](#emp-methods)
     * [Login](#emp-login)
     * [Registration](#emp-new)
@@ -488,6 +489,10 @@ For example: MAJOR = Kitchen, Minor = Coffee Maker
 **Method** POST
 
 **Request**
+
+*Headers*
+
+auth-token *(Required)*
     
 
 | Parameter        | Type           | Description  |
@@ -517,6 +522,48 @@ If unsuccessful, you will receive:
 ```json
     {"errors":[
                 "YOU FUCKED UP",
+                ]
+    }
+```
+
+###<a name="bcn-update"></a>Edit a Beacon
+
+This will return a list of all organization-registered beacons and their associated information.
+
+**URL** /beacons/:id
+
+**Method** PUT
+
+**Request**
+
+*Headers*
+
+auth-token *(Required)*
+
+| Parameter        | Type           | Description  |
+| ------------- |:-------------:|:----- |
+| uuid  | String | ​*(Required)*​ The UUID of the beacon |
+| major | String      |  ​*(Required)* The major identifier, customizable in V2.0 |
+| minor | String | ​*(Required)*​ The minor identifier, customizable in V2.0 |
+| organization_id | integer | *(Required)* The id of the organization the beacons are registered to |
+
+**Response**
+
+If successful, you will receive:
+
+```
+json: { success: "Beacon updated successfully" }, status: :ok
+        
+```
+
+
+If unsuccessful, you will receive:
+
+    Status Code: 404
+    
+```json
+    {"errors":[
+                "YOU FUCKED UP.  Check your parameters and try again.
                 ]
     }
 ```
@@ -555,3 +602,23 @@ If unsuccessful, you will receive:
                 ]
     }
 ```
+
+###<a name="bcn-destroy"></a>Delete a Beacon
+
+In the event you need to delete a beacon, this is the way to do it.
+
+**URL** /beacons/:id
+
+**Method** DELETE
+
+**Request**
+
+| Parameter        | Type           | Description  |
+| ------------- |:-------------:|:----- |
+| beacon_id  | integer | ​*(Required)*​ The unique ID of the beacon you'd like to delete |
+
+**Response**
+
+If successful, nothing happens.  What, you want a pretty status message or something?
+
+If unsuccessful, you should probably not be messing around with back-end commands, fam.
