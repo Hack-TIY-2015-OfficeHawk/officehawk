@@ -1,5 +1,7 @@
 # Office Hawk API
 
+[![Build Status](https://travis-ci.org/Hack-TIY-2015-OfficeHawk/officehawk.svg?branch=master)](http://travis-ci.org/Hack-TIY-2015-OfficeHawk/officehawk)
+
 Welcome to the Office Hawk API docs!
 
 We're watching you...
