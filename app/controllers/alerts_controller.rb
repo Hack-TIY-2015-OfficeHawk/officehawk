@@ -1,11 +1,13 @@
 class AlertsController < ApplicationController
+  before_action :authenticate_employee!
   before_action :set_alert, only: [:show, :edit, :update, :destroy]
   before_action :set_beacon, only: [:create, :destroy]
-  before_action :authenticate_employee!
+
   # GET /alerts
   # GET /alerts.json
   def index
-    @alerts = Alert.all
+    org = Organization.find(current_employee.organization_id)
+    @alerts = org.alerts
     render "index.json.jbuilder", status: :ok
   end
 
