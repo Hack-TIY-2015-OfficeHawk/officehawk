@@ -1,8 +1,13 @@
 class EmployeesController < ApplicationController
   ## TODO not sure if we need this??
-  before_action :set_employee, only: [:update, :destroy]
-  before_action :authenticate_employee!, only: [:index, :update, :destroy]
+  before_action :set_employee, only: [:update, :destroy, :show]
+  before_action :authenticate_employee!, only: [:show, :index, :update, :destroy]
   before_action :set_organization, only: [:index, :update, :destroy]
+
+  def show
+      @alerts = @employee.alerts.all
+      render "show.json.jbuilder", status: :ok
+  end
 
   def index
     if current_employee.admin

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   post "/employees/login", to: "employees#create"
   put "/employees/:id", to: "employees#update"
   delete "/employees/:id", to: "employees#destroy"
+  get "employees/:id", to: "employees#show"
 
   resources :beacons, only: [ :index, :create, :update, :destroy ]
 
