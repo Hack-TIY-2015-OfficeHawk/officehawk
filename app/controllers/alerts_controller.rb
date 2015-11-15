@@ -19,11 +19,7 @@ class AlertsController < ApplicationController
                        state: params[:state],
                        employee_id: current_employee.id)
       if @alert.save
-<<<<<<< HEAD
        render json: { success: "PREY ACQUIRED! TRACKING MODE ACTIVATED! SCREEEEEEEEE!" }, status: :ok
-=======
-        render json: { success: "alert created successfully" }, status: :created
->>>>>>> 289d58a27fdef7b53e64fa6ba747440a61c49539
       else
         render json: { errors: @alert.errors.full_messages }, status: :unprocessable_entity
     end
