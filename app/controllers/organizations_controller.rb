@@ -37,7 +37,7 @@ class OrganizationsController < ApplicationController
   def update
     @organization.update(organization_params)
     if @organization.save
-      render "update.json.jbuilder", status: :ok
+      render json: { success: "organization updated successfully"}, status: :ok
     else
       render json: { errors: @orgnanization.errors.full_messages }, status: :unprocessable_entity
     end
