@@ -18,6 +18,7 @@ We're watching you...
     * [Login](#emp-login)
     * [Registration](#emp-new)
     * [List Employees](#emp-list)
+    * [List Employee Alerts](#emp-show)
     * [Update Employee](#emp-update)
     * [Delete Employee](#emp-delete)
 
@@ -312,6 +313,71 @@ If unsuccessful, you will receive:
 ```json
 {
   "errors": "username or password incorrect"
+}
+```
+
+###<a name="emp-show"></a>Display Employee Alert Data
+
+Display all alerts for a given employee ID
+
+**URL** /employees/:id
+
+**Method** GET
+
+**Headers**
+
+auth-token *(Required)*
+
+**Request**
+
+**Response**
+
+If successful, you will receive:
+
+	Status Code: 200 - OK
+	
+```json
+{
+  "alert": [
+    {
+      "id": 1,
+      "state": "near",
+      "beacon_id": 4,
+      "beacon_uuid": "4B91A9DF-B7D0-CBA4-096B-9EAE45837F02",
+      "beacon_minor": "1000",
+      "beacon_major": "100",
+      "duration": 20
+    },
+    {
+      "id": 2,
+      "state": "far",
+      "beacon_id": 4,
+      "beacon_uuid": "4B91A9DF-B7D0-CBA4-096B-9EAE45837F02",
+      "beacon_minor": "1000",
+      "beacon_major": "100",
+      "duration": 20
+    },
+    {
+      "id": 3,
+      "state": "near",
+      "beacon_id": 4,
+      "beacon_uuid": "4B91A9DF-B7D0-CBA4-096B-9EAE45837F02",
+      "beacon_minor": "1000",
+      "beacon_major": "100",
+      "duration": 20
+    }
+  ]
+}
+			
+```
+
+If unsuccessful, you will receive:
+
+	Status Code: 401 - Unauthorized
+	
+```json
+{
+  "errors": "you betta be logged in to do that!"
 }
 ```
 
