@@ -17,7 +17,7 @@ class OrganizationsController < ApplicationController
   def create
     @organization = Organization.new(name: params[:name], owner: params[:username]) #owner: params[:username]
     if @organization.save
-      binding.pry
+      #binding.pry
       @owner = @organization.employees.new(username: params[:username], 
                                password: params[:password], 
                                organization_id: @organization.id,
