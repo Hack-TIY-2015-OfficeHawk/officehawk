@@ -4,6 +4,11 @@ Welcome to the Office Hawk API docs!
 
 We're watching you...
 
+**Purpose**
+OfficeHawk is a proprietary productivity solution utilizing the iBeacon system, designed to identify trouble areas in an office or organization for better micromanagement of the peasants that make your money for you.  This exciting new devlopment in creeper technology will allow a manager to track the movements of their employees, much like a warden may track prisoners in a Super-Max prison
+
+Employees are able to register and run the client in the background of their mobile phones.  The manager can then check in on the Office Hawk console to see which employees have been spotted in zones.
+
 **Methods**
 
 * [Organization Methods](#org-methods)
