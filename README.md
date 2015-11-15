@@ -338,7 +338,7 @@ If successful, you will receive:
 	
 ```json
 {
-  "alerts": [
+  "alert": [
     {
       "id": 1,
       "state": "near",
