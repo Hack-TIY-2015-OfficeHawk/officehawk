@@ -2,7 +2,7 @@ class EmployeesController < ApplicationController
   ## TODO not sure if we need this??
   before_action :set_employee, only: [:update, :destroy]
   before_action :authenticate_employee!, only: [:index, :update, :destroy]
-  before_action :set_organization, only: [:new, :index, :update, :destroy]
+  before_action :set_organization, only: [:index, :update, :destroy]
 
   def index
     if current_employee.admin
@@ -14,8 +14,13 @@ class EmployeesController < ApplicationController
   end
 
   def new
-      @employee = @org.employees.new(username: params[:username],
-                               password: params[:password])
+    if current_employee
+      set_organization
+    else
+      @org = Organization.find_by(name: params[:name])
+    end
+    @employee = @org.employees.new(username: params[:username],
+                                   password: params[:password])
 
     if @employee.save
       render "new.json.jbuilder", status: :created
