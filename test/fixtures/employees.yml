@@ -3,18 +3,19 @@
 one:
   username: terri
   password_digest: passworddigest1
-  auth_key: authkey1
+  auth_token: authtoken2
   organization: one
-  admin: false
+  admin: true
 
 two:
   username: dan
   password_digest: MyString
+  auth_token: authtoken2
   organization: two
   admin: false
 
-adminone:
-  username: mac
-  password_digest: MyString
-  organization: one
-  admin: true
+#adminone:
+#  username: mac
+#  password_digest: MyString
+#  organization: one
+#  admin: true
