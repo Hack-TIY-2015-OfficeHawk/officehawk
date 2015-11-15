@@ -1,6 +1,6 @@
-# office hawk api
+# Office Hawk API
 
-Welcome to the office hawk API docs!
+Welcome to the Office Hawk API docs!
 
 We're watching you...
 
