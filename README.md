@@ -2,6 +2,10 @@
 
 [![Build Status](https://travis-ci.org/Hack-TIY-2015-OfficeHawk/officehawk.svg?branch=master)](http://travis-ci.org/Hack-TIY-2015-OfficeHawk/officehawk)
 
+[![Code Climate](https://codeclimate.com/github/Hack-TIY-2015-OfficeHawk/officehawk/badges/gpa.svg)](https://codeclimate.com/github/Hack-TIY-2015-OfficeHawk/officehawk)
+
+[![Test Coverage](https://codeclimate.com/github/Hack-TIY-2015-OfficeHawk/officehawk/badges/coverage.svg)](https://codeclimate.com/github/Hack-TIY-2015-OfficeHawk/officehawk/coverage)
+
 Welcome to the Office Hawk API docs!
 
 We're watching you...
